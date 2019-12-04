@@ -1,0 +1,84 @@
+﻿
+@model List<LocadoraES.Models.Locacao>
+@{
+    /**/
+
+    ViewBag.Title = "Locacao";
+}
+
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        @TempData["Mensagem"]
+    </div>
+}
+
+@using (Html.BeginForm("ApagarLocacao", "Locacao", FormMethod.Get))
+{
+    <br />
+    <br />
+    <br />
+    <div class="container">
+        <h2>Lista de locações</h2>
+        @Html.ValidationSummary(true)
+        <table class="table">
+            <tbody>
+                <tr>
+                <tr>
+                    <th>
+                        <label>Nr. Locacao</label>
+                    </th>
+                    <th>
+                        <label>CPF</label>
+                    </th>
+                    <th>
+                        <label>Data de criação</label>
+                    </th>
+                    <th>
+                        <label>Alterar</label>
+                    </th>
+                    <th>
+                        <label>Excluir</label>
+                    </th>
+                </tr>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <label for="@item.Id">@item.Id </label>
+                            </td>
+                            <td>
+                                <label for="@item.CPF">@item.CPF </label>
+                            </td>
+                            <td>
+                                <label for="@item.DhCriacao">@item.DhCriacao.ToString("dd-MM-yyyy") </label>
+                            </td>
+                            <td>
+                                @Html.ActionLink("Alterar", "AlterarLocacao", "Locacao", new { @Id = item.Id }, null)
+                            </td>
+                            <td>
+                                <input type="checkbox"
+                                       name="Id"
+                                       value="@item.Id" id="@item.Id" />
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        @Html.ActionLink("Cadastro de Locação", "CadastroLocacao", "Locacao", new { @class = "btn btn-default" })
+        <input type="submit" value="Excluir" class="btn btn-default" />
+    </div>
+}
+
+
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+

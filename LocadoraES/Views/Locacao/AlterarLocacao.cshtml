@@ -1,0 +1,77 @@
+﻿
+@model LocadoraES.Models.Locacao
+@{
+    ViewBag.Title = "AlterarLocacao";
+}
+
+@using (Html.BeginForm("AlterarLocacao", "Locacao"))
+{
+    @Html.AntiForgeryToken()
+    <br />
+    <br />
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>Preencha os dados da Locacao</h4>
+        </div>
+        <div class="panel-body">
+            <div hidden>
+                @Html.LabelFor(model => model.Id)
+                @Html.TextBoxFor(model => model.Id)
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.CPF, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.CPF, new { htmlAttributes = new { @class = "form-control", placeholder = "XXX.XXX.XXX-XX" } })
+                    @Html.ValidationMessageFor(model => model.CPF, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="DhCriacao">Data de criação</label>
+                    @if (Model.DhCriacao.Year < 1500)
+                    {
+                        <input type="date" value=@DateTime.Now.ToString("yyyy-MM-dd") name="dhCriacao" class="form-control" />
+                    }
+                    else
+                    {
+                        <input type="date" value=@Model.DhCriacao.ToString("yyyy-MM-dd") name="dhCriacao" class="form-control" />
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="col-md-8" id="div-telefones">
+                        @Html.LabelFor(model => model.Filmes, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <ol style="list-style-type:none;">
+                                
+                                @foreach (var filme in ViewBag.Filmes)
+                                {
+                                    <li><div> @filme.Nome </div></li>
+                                }
+                            </ol>
+                    </div>
+                </div>
+            </div>
+
+
+
+            
+
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Salvar" class="btn btn-success">
+            <input type="submit" value="Voltar" class="btn btn-secondary" onClick=" javascript : history.back(-1);">
+        </div>
+
+    </div>
+
+}
+
+
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

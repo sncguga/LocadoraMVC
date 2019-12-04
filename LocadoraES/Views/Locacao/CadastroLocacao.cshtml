@@ -1,0 +1,67 @@
+﻿
+@model LocadoraES.Models.Locacao
+@{
+    ViewBag.Title = "CadastroLocacao";
+}
+
+@using (Html.BeginForm("CadastroLocacao", "Locacao"))
+{
+    @Html.ValidationSummary(true)
+    <br />
+    <br />
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>Preencha os dados da Locacao</h4>
+        </div>
+        <div class="panel-body">
+            <div hidden>
+                @Html.LabelFor(model => model.Id)
+                @Html.TextBoxFor(model => model.Id)
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    @Html.LabelFor(model => model.CPF, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.CPF, new { htmlAttributes = new { @class = "form-control", placeholder = "XXX.XXX.XXX-XX" } })
+                    @Html.ValidationMessageFor(model => model.CPF, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="DhCriacao">Data de locação</label>
+                    @if (Model.DhCriacao.Year < 1500)
+                    {
+                        <input type="date" value=@DateTime.Now.ToString("yyyy-MM-dd") name="DhCriacao" class="form-control" />
+                    }
+                    else
+                    {
+                        <input type="date" value=@Model.DhCriacao.ToString("yyyy-MM-dd") name="DhCriacao" class="form-control" />
+                    }
+                </div>
+            </div>
+
+            @Html.LabelFor(model => model.Filmes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <ul style="list-style-type:none;">
+                @foreach (var filme in ViewBag.Filmes)
+                {
+                    <li><input type="checkbox" name="FilmeIds" value="@filme.Id" /> @filme.Nome </li>
+                }
+            </ul>
+
+
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Cadastrar" class="btn btn-success">
+            <input type="submit" value="Voltar" class="btn btn-secondary" onClick=" javascript : history.back(-1);">
+        </div>
+
+    </div>
+
+}
+
+
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
