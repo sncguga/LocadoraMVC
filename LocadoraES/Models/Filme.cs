@@ -24,7 +24,6 @@ namespace LocadoraES.Models
         [Display(Name = "Ativo")]
         public bool FlAtivo { get; set; }
 
-
         [Required(ErrorMessage = "Escolha/Cadastre um gênero")]
         [ForeignKey("Genero")]
         public int IdGenero { get; set; }
@@ -35,14 +34,8 @@ namespace LocadoraES.Models
         public virtual ICollection<Locacao> Locacoes { get; set; }
 
         public virtual Genero Genero { get; set; }
-
         
         public virtual List<Genero> ListaGenero()
         { return new List<Genero>(); }
-
-       
-
     }
-
-
 }

@@ -10,7 +10,6 @@ namespace LocadoraES.Models
     {
         public UsersContext() : base("Locadora")
         {
-
         }
 
         public DbSet<User> Users { get; set; }

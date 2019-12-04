@@ -14,31 +14,23 @@ namespace LocadoraES.Controllers
     public class GeneroController : Controller
     {
         private LocadoraContext db = new LocadoraContext();
-        
-     
-
         // GET: Genero
         [Authorize]
         public ActionResult Index()
         {
+            //utilizando dapper para carregar os generos
             List<Genero> generos = new List<Genero>();
             using (IDbConnection db = new SqlConnection(ConfigurationManager.ConnectionStrings["Locadora"].ConnectionString))
             {
-
                 generos = db.Query<Genero>("Select * From Generos").ToList();
             }
-            // return View(db.Generos.ToList());
             return View(generos);
         }
-
-
-
         [Authorize]
         public ActionResult CadastroGenero()
         {
             return View(new Genero());
         }
-
         [HttpPost]
         public ActionResult CadastroGenero(Genero genero)
         {
@@ -58,27 +50,19 @@ namespace LocadoraES.Controllers
 
             return RedirectToAction("Index");
         }
-
-
-
         public ActionResult ApagarGenero(int[] Id)
         {
             if (Id == null)
             {
                 ModelState.AddModelError("", "Nenhum item foi selecionado para deletar");
             }
-
-
-
             foreach (int item in Id)
             {
                 Genero genero = db.Generos.Find(item);
                 db.Generos.Remove(genero);
                 db.SaveChanges();
             }
-
             return View("Index", db.Generos.ToList());
-
         }
     }
 }

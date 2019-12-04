@@ -23,8 +23,5 @@ namespace LocadoraES.Models
 
         [Display(Name = "Ativo")]
         public bool FlAtivo { get; set; }
-
-
-       
     }
 }

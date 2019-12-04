@@ -22,44 +22,32 @@ namespace LocadoraES.Controllers
         public ActionResult Index()
         {
            return View(db.Filmes.ToList());
-           
         }
-
         [Authorize]
         public ActionResult CadastroFilme()
         {
             //carrega o id do genero para o dropdown
-            ViewBag.IdGenero = new SelectList(db.Generos.ToList(),
-           "Id", "Nome");
+            ViewBag.IdGenero = new SelectList(db.Generos.ToList(), "Id", "Nome");
             return View(new Filme());
         }
-
-        
         [HttpPost]
         public ActionResult CadastroFilme(Filme filme)
         {
-
             if (!ModelState.IsValid)
             {
-                ViewBag.IdGenero = new SelectList(db.Generos.ToList(),
-           "Id", "Nome");
-                
+                ViewBag.IdGenero = new SelectList(db.Generos.ToList(), "Id", "Nome");
                 return View("CadastroFilme", filme);
-
             }
-
             if (filme.Nome == null || filme.Nome == "")
             {
                 ModelState.AddModelError("Nome", "Informar o Nome");
                 return View("CadastroFilme");
             }
-
             if (filme.IdGenero == 0)
             {
                 ModelState.AddModelError("IdGenero", "Informar o Gênero");
                 return View("CadastroFilme");
             }
-
 
             //retorna o Id do genero
             ViewBag.IdGenero = new SelectList(
@@ -76,14 +64,12 @@ namespace LocadoraES.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             Filme filme = db.Filmes.Find(Id);
             if (filme == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.IdGenero = new SelectList(db.Generos.ToList(),
-          "Id", "Nome");
+            ViewBag.IdGenero = new SelectList(db.Generos.ToList(),"Id", "Nome");
             return View(filme);
         }
 
@@ -101,25 +87,19 @@ namespace LocadoraES.Controllers
             }
             return View(filme);
         }
-
-
         public ActionResult ApagarFilme(int[] Id)
         {
             if (Id == null)
             {
                 ModelState.AddModelError("", "Nenhum item foi selecionado para deletar");
             }
-
             foreach (int item in Id)
             {
                 Filme filme = db.Filmes.Find(item);
                 db.Filmes.Remove(filme);
                 db.SaveChanges();
             }
-
             return View("Index", db.Filmes.ToList());
-
         }
-
     }
 }

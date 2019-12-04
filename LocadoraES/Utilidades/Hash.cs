@@ -9,6 +9,7 @@ namespace LocadoraES.Utilidades
 {
     public class Hash
     {
+        //gera o hash de criptografia
         public static string GenerateHash(string text)
         {
             SHA256 sha256 = SHA256Managed.Create();

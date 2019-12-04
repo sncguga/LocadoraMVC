@@ -18,9 +18,8 @@ namespace LocadoraES.Models
         public string CPF { get; set; }
 
         [Display(Name = "Data de Criação")]
-        public DateTime DhCriacao { get; set; }
-       
-        public virtual List<Filme> Filmes { get; set; }
 
+        public DateTime DhCriacao { get; set; }
+        public virtual List<Filme> Filmes { get; set; }
     }
 }

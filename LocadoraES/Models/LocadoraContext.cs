@@ -11,7 +11,6 @@ namespace LocadoraES.Models
 
         public LocadoraContext() : base("Locadora")
         {
-
         }
 
         public DbSet<Filme> Filmes { get; set; }

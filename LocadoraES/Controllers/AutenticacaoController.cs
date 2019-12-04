@@ -38,7 +38,7 @@ namespace LocadoraES.Controllers
                 Nome = cviewmodel.Nome,
                 Login = cviewmodel.Login,
                 Senha = Hash.GenerateHash(cviewmodel.Senha)
-              //Senha = cviewmodel.Senha
+              
             };
 
             db.Users.Add(newUser);
@@ -58,7 +58,6 @@ namespace LocadoraES.Controllers
 
             return View(lviewmodel);
         }
-
         [HttpPost]
         public ActionResult Login(LoginViewModel lviewmodel)
         {
@@ -98,12 +97,10 @@ namespace LocadoraES.Controllers
             else
                 return RedirectToAction("Index", "Filme");
         }
-
         public ActionResult Logout()
         {
             Request.GetOwinContext().Authentication.SignOut("ApplicationCookie");
             return RedirectToAction("Index", "Home");
         }
-
     }
 }

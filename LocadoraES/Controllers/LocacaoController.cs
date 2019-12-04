@@ -25,16 +25,13 @@ namespace LocadoraES.Controllers
         {
             return View(db.Locacoes.ToList());
         }
-
-
         [Authorize]
         public ActionResult CadastroLocacao()
         {
+            //carrega lista de filmes
             ViewBag.Filmes = db.Filmes;
             return View(new Locacao());
         }
-
-        
         [HttpPost]
         public ActionResult CadastroLocacao(int[] FilmeIds, Locacao locacao)
         {
@@ -44,14 +41,12 @@ namespace LocadoraES.Controllers
                 return View("CadastroLocacao");
 
             }
-
             if(locacao.CPF == null || locacao.CPF == "")
             {
                 ModelState.AddModelError("CPF", "Informar o CPF");
                 return View("CadastroLocacao");
             }
-
-
+            //busca os filmes selecionados para inclusao
             locacao.Filmes = new List<Filme>();
             foreach (int filmeId in FilmeIds)
             {
@@ -62,7 +57,6 @@ namespace LocadoraES.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         [Authorize]
         public ActionResult AlterarLocacao(int? Id)
         {
@@ -76,42 +70,34 @@ namespace LocadoraES.Controllers
                 return HttpNotFound();
             }
             ViewBag.Filmes = locacao.Filmes;
-            
                 return View(locacao);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AlterarLocacao(Locacao locacao, int[] FilmeIds)
         {
             if (ModelState.IsValid)
             {
+                //pega as alterações para salvar
                 db.Entry(locacao).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(locacao);
         }
-
-
         public ActionResult ApagarLocacao(int[] Id)
         {
             if (Id == null)
             {
                 ModelState.AddModelError("", "Nenhum item foi selecionado para deletar");
             }
-
             foreach (int item in Id)
             {
                 Locacao locacao = db.Locacoes.Find(item);
                 db.Locacoes.Remove(locacao);
                 db.SaveChanges();
             }
-
             return View("Index", db.Locacoes.ToList());
-
         }
-
     }
-
 }
